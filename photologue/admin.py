@@ -3,6 +3,7 @@ from django import forms
 from django.conf import settings
 
 from .models import *
+from photologue import get_photo_model
 
 USE_CKEDITOR = getattr(settings, 'PHOTOLOGUE_USE_CKEDITOR', False)
 
@@ -29,7 +30,7 @@ class PhotoAdminForm(forms.ModelForm):
         caption = forms.CharField(widget=CKEditorWidget())
 
     class Meta:
-        model = Photo
+        model = get_photo_model()
 
 class PhotoAdmin(admin.ModelAdmin):
     list_display = ('title', 'date_taken', 'date_added', 'is_public', 'tags', 'view_count', 'admin_thumbnail')
@@ -82,10 +83,9 @@ class GalleryUploadAdmin(admin.ModelAdmin):
     def has_change_permission(self, request, obj=None):
         return False # To remove the 'Save and continue editing' button
 
-
 admin.site.register(Gallery, GalleryAdmin)
 admin.site.register(GalleryUpload, GalleryUploadAdmin)
-admin.site.register(Photo, PhotoAdmin)
+# admin.site.register(get_photo_model(), PhotoAdmin)
 admin.site.register(PhotoEffect, PhotoEffectAdmin)
 admin.site.register(PhotoSize, PhotoSizeAdmin)
 admin.site.register(Watermark, WatermarkAdmin)

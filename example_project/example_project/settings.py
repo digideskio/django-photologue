@@ -102,3 +102,4 @@ INSTALLED_APPS = [
 
 SOUTH_TESTS_MIGRATE = False
 
+CUSTOM_PHOTO_MODEL = 'example_project.MyPhoto'
